@@ -23,7 +23,16 @@ function api(url, method, callbackApi) {
 }
 
 function callbackApi(respondApi) {
-    console.log(respondApi);
+    respondApi
+        .then(function (result) {
+            let arrayObjectsPhones = result.map(function (item) {
+                return item.name;
+            });
+            console.log(arrayObjectsPhones);
+        })
+        .catch((erroe) => {
+            console.log(erroe)
+        })
 }
 
 let buttonClearConsole = document.getElementById('clearConsole');
