@@ -13,8 +13,17 @@ function api(url, method, callbackApi) {
     } else {
         fetch(url, method)
             .then((response) => {
-                let result = response.json();
-                return callbackApi(result);
+                let resultPromise = response.json();
+                resultPromise
+                    .then(function (result) {
+                        let arrayObjectsPhones = result.map(function (item) {
+                            return item.name;
+                        });
+                        return callbackApi(arrayObjectsPhones);
+                    })
+                    .catch((erroe) => {
+                        console.log(erroe)
+                    })
             })
             .catch((error) => {
                 return console.error('Error', error.message)
@@ -22,17 +31,8 @@ function api(url, method, callbackApi) {
     }
 }
 
-function callbackApi(respondApi) {
-    respondApi
-        .then(function (result) {
-            let arrayObjectsPhones = result.map(function (item) {
-                return item.name;
-            });
-            console.log(arrayObjectsPhones);
-        })
-        .catch((erroe) => {
-            console.log(erroe)
-        })
+function callbackApi(arrayObjectsPhones) {
+    console.log(arrayObjectsPhones)
 }
 
 let buttonClearConsole = document.getElementById('clearConsole');
