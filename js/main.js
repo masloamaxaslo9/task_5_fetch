@@ -9,24 +9,21 @@ buttonSubmitForm.addEventListener('click', function () {
 
 function api(url, method, callbackApi) {
     if(method.method !== 'GET') {
-        return console.error('Only method \'GET\'');
+        console.error('Only method \'GET\'');
     } else {
         fetch(url, method)
             .then((response) => {
                 let resultPromise = response.json();
                 resultPromise
                     .then(function (result) {
-                        let arrayObjectsPhones = result.map(function (item) {
-                            return item.name;
-                        });
-                        return callbackApi(arrayObjectsPhones);
+                        callbackApi(result);
                     })
                     .catch((erroe) => {
                         console.log(erroe)
                     })
             })
             .catch((error) => {
-                return console.error('Error', error.message)
+                console.error('Error', error.message);
             })
     }
 }
